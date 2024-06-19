@@ -13,32 +13,33 @@ export class AutomationService {
 
   @Cron('15 * * * * *')
   handle15() {
-    this.logger.warn('handle15');
+    this.logger.warn('handle15 adicionada a fila');
     this.queueService.enqueue(() =>
-      this.workerService.handle('Called when the current second is 15', 25000),
+      this.workerService.handle('handle15', 25000),
     );
   }
 
   @Cron('30 * * * * *')
   handle30() {
-    this.logger.warn('handle30');
+    this.logger.warn('handle30 adicionada a fila');
     this.queueService.enqueue(() =>
-      this.workerService.handle('Called when the current second is 30', 10000),
+      this.workerService.handle('handle30', 10000),
     );
   }
 
   @Cron('31 * * * * *')
   handle30a() {
-    this.logger.warn('handle31');
+    this.logger.warn('handle31 adicionada a fila');
     this.queueService.enqueue(() =>
-      this.workerService.handle('Called when the current second is 31', 7000),
+      this.workerService.handle('handle31', 7000),
     );
   }
 
-  //   @Cron('45 * * * * *')
-  //   handle45() {
-  //     this.queueService.enqueue(() =>
-  //       this.workerService.handle('Called when the current second is 45', 6000),
-  //     );
-  //   }
+  @Cron('45 * * * * *')
+  handle45() {
+    this.logger.warn('handle45 adicionada a fila');
+    this.queueService.enqueue(() =>
+      this.workerService.handle('handle45', 20000),
+    );
+  }
 }
