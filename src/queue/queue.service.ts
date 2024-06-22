@@ -6,12 +6,12 @@ export class QueueService {
   private queue = [];
   constructor(private eventEmitter: EventEmitter2) {}
 
-  enqueue(fn: () => Promise<void>): void {
+  enqueue(fn: () => Promise<any>, taskName?: string): void {
     this.queue.push(fn);
-    this.eventEmitter.emit('enqueue', {});
+    this.eventEmitter.emit(`enqueue`, { taskName });
   }
 
-  dequeue(): () => Promise<void> {
+  dequeue(): () => Promise<any> {
     return this.queue.shift();
   }
 

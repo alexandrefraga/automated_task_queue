@@ -6,6 +6,7 @@ import { WorkerModule } from './worker/worker.module';
 import { QueueModule } from './queue/queue.module';
 import { ManagerModule } from './manager/manager.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     WorkerModule,
     QueueModule,
     ManagerModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
