@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Worker } from 'worker_threads';
 import { TaskService } from '../task/task.service';
 
@@ -11,16 +10,11 @@ type WorkerResult = {
 @Injectable()
 export class WorkerService {
   private readonly logger = new Logger(WorkerService.name);
-  // constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) {}
+
   async handle(taskName, timeout): Promise<WorkerResult> {
-    return new Promise<WorkerResult>((resolve) => {
-      this.logger.debug(`${taskName} em execução...`);
-      setTimeout(() => {
-        resolve({ taskName, data: {} });
-      }, timeout);
-    });
-    // const data = await this.taskService.handle({ taskName, timeout });
-    // return { taskName, data };
+    const data = await this.taskService.handle({ taskName, timeout });
+    return { taskName, data };
   }
 
   handleThread(taskName, timeout): Promise<WorkerResult> {

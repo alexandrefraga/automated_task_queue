@@ -17,14 +17,7 @@ export class ManagerService {
     if (this.countProcess < this.maxProcess) {
       this.countProcess += 1;
       const task = this.queueService.dequeue();
-      task()
-        .then((resp) => {
-          console.log('response of worker to manager: ', resp);
-          this.eventEmitter.emit('worker-finish', {
-            taskName: resp.taskName,
-          });
-        })
-        .catch(console.error);
+      this.handleTask(task);
     }
   }
 
@@ -37,16 +30,20 @@ export class ManagerService {
     if (this.countProcess < this.maxProcess && queueLentgth) {
       this.countProcess += 1;
       const task = this.queueService.dequeue();
-      // Promise.all([task()]);
-
-      task()
-        .then((resp) => {
-          console.log('response of worker to manager: ', resp);
-          this.eventEmitter.emit('worker-finish', {
-            taskName: resp.taskName,
-          });
-        })
-        .catch(console.error);
+      this.handleTask(task);
     }
+  }
+
+  private handleTask(task: () => Promise<any>) {
+    task()
+      .then((resp) => {
+        this.logger.log(
+          `Response of worker to manager: ${JSON.stringify(resp)}`,
+        );
+        this.eventEmitter.emit('worker-finish', {
+          taskName: resp.taskName,
+        });
+      })
+      .catch(console.error);
   }
 }

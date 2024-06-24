@@ -3,7 +3,8 @@ import { WorkerService } from './worker.service';
 import { TaskModule } from '../task/task.module';
 
 @Module({
-  providers: [WorkerService, TaskModule],
+  imports: [TaskModule],
+  providers: [WorkerService],
   exports: [WorkerService],
 })
 export class WorkerModule {}
