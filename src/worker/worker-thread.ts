@@ -9,7 +9,7 @@ async function bootstrap() {
       logger: ['warn', 'debug'],
     });
     const taskService = app.get(TaskService);
-    const result = await taskService.handle(workerData);
+    const result = await taskService.handleWhile(workerData);
 
     parentPort.postMessage(result);
     return await app.close();

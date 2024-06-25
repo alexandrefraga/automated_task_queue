@@ -11,48 +11,31 @@ export class AutomationService {
     private workerService: WorkerService,
   ) {}
 
-  @Cron('15 * * * * *')
-  handle15() {
-    this.logger.warn('handle15 adicionada a fila');
+  @Cron('0 * * * * *')
+  handle1() {
+    this.logger.warn('task1 adicionada a fila');
     this.queueService.enqueue(
-      () => this.workerService.handle('handle15', 25000),
-      'handle 15',
+      () => this.workerService.handle('task1', 20000),
+      'task 01',
     );
   }
 
-  @Cron('30 * * * * *')
-  handle30() {
-    this.logger.warn('handle30 adicionada a fila');
+  @Cron('1 * * * * *')
+  handle2() {
+    this.logger.warn('task2 while adicionada a fila');
     this.queueService.enqueue(
-      () => this.workerService.handle('handle30', 10000),
-      'handle 30',
+      () => this.workerService.handleWhile('task2 while', 15000),
+      'task 02 while',
     );
   }
 
-  @Cron('35 * * * * *')
-  handle30a() {
-    this.logger.warn('handle35 adicionada a fila');
+  @Cron('2 * * * * *')
+  handle4() {
+    this.logger.warn('task3 while in thread adicionada a fila');
     this.queueService.enqueue(
-      () => this.workerService.handle('handle35', 5000),
-      'handle 35',
-    );
-  }
-
-  @Cron('40 * * * * *')
-  handle32() {
-    this.logger.warn('handle40 adicionada a fila');
-    this.queueService.enqueue(
-      () => this.workerService.handleThread('handle40', 5000),
-      'handle thread 40',
-    );
-  }
-
-  @Cron('45 * * * * *')
-  handle45() {
-    this.logger.warn('handle45 adicionada a fila');
-    this.queueService.enqueue(
-      () => this.workerService.handle('handle45', 10000),
-      'handle 45',
+      () =>
+        this.workerService.handleWhileThread('task3 while in thread', 20000),
+      'task 03 in thread',
     );
   }
 }

@@ -17,7 +17,12 @@ export class WorkerService {
     return { taskName, data };
   }
 
-  handleThread(taskName, timeout): Promise<WorkerResult> {
+  async handleWhile(taskName, timeout): Promise<WorkerResult> {
+    const data = await this.taskService.handleWhile({ taskName, timeout });
+    return { taskName, data };
+  }
+
+  handleWhileThread(taskName, timeout): Promise<WorkerResult> {
     return new Promise<WorkerResult>((resolve, reject) => {
       const worker = new Worker('./dist/worker/worker-thread.js', {
         workerData: { taskName, timeout },
